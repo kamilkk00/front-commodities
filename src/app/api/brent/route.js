@@ -1,9 +1,7 @@
 // app/api/brent/route.js
 import { NextResponse } from 'next/server'
 
-const UPSTREAM_URL =       
-  searchParams.get('url') ||
-  process.env.COMMODITIES_BRENT;
+const UPSTREAM_URL = process.env.COMMODITIES_BRENT
 
 if (!UPSTREAM_URL) {
   throw new Error(
