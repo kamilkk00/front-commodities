@@ -9,19 +9,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 // Inline SVG calendar icon component
 const CalendarIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5 text-gray-500"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
   </svg>
 )
 
@@ -109,9 +98,27 @@ export default function BrentPage() {
         {error && <p className="mt-4 text-center text-red-500">Error: {error}</p>}
 
         {result && (
-          <pre className="mt-6 bg-gray-50 p-4 rounded-lg overflow-auto text-sm">
-            {JSON.stringify(result, null, 2)}
-          </pre>
+          Number(result.price) === result.price ? (
+            <div className="mt-6 bg-green-50 p-6 rounded-lg flex flex-col items-center">
+              <span className="text-gray-600 text-sm">Price on {format(selectedDate, 'dd-MM-yyyy')}</span>
+              <span className="text-4xl font-semibold mt-2">${result.price.toFixed(2)}</span>
+              <span className="text-gray-600 text-sm mt-1">USD per barrel</span>
+            </div>
+          ) : (
+            <div className="mt-6 bg-red-100 p-8 rounded-lg flex flex-col items-center">
+              {/* Split message to have date on new line */}
+              {(() => {
+                const [prefix, datePart] = result.price.split(/(?='\d{4}-\d{2}-\d{2}')/)
+                return (
+                  <span className="text-red-700 text-2xl font-semibold text-center">
+                    {prefix}
+                    <br />
+                    {datePart}
+                  </span>
+                )
+              })()}
+            </div>
+          )
         )}
       </div>
     </main>
