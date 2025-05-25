@@ -3,10 +3,9 @@
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
   
-    // you can still override via ?url=…
     const target =
       searchParams.get('url') ||
-      process.env.HEALTHCHECK_URL;    // ← now comes from env
+      process.env.HEALTHCHECK_URL;    
   
     if (!target) {
       return new Response(
