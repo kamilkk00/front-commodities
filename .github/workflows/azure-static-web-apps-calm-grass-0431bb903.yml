@@ -34,6 +34,7 @@ jobs:
            result-encoding: string
       - name: Generate Env File
         run: echo 'COMMODITIES_BRENT=${{secrets.COMMODITIES_BRENT}}' >> .env
+      - name: Generate Env File
         run: echo 'COMMODITIES_WTI=${{secrets.COMMODITIES_WTI}}' >> .env
       - name: Build And Deploy
         id: builddeploy
