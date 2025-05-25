@@ -65,7 +65,7 @@ export default function WTIPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <main className="min-h-screen bg-gray-100 flex items-start justify-center pt-16 px-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full">
         <h1 className="text-2xl font-bold text-center mb-6">WTI Price Lookup</h1>
 

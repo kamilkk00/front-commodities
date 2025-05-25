@@ -1,0 +1,58 @@
+/* src/app/layout.css */
+
+:root {
+    --card-bg: #f9fafb;
+    --foreground: #171717;
+    --primary: #1d4ed8;
+  }
+  
+  /* Header & nav */
+  header.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  header.site-header .container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  header.site-header .nav-link {
+    position: relative;
+    color: var(--foreground);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  header.site-header .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: var(--primary);
+    transition: width 0.3s;
+  }
+  
+  header.site-header .nav-link:hover {
+    color: var(--primary);
+  }
+  
+  header.site-header .nav-link:hover::after,
+  header.site-header .nav-link.active::after {
+    width: 100%;
+  }
+  
