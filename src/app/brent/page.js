@@ -1,27 +1,70 @@
 // app/brent/page.js
 'use client'
 
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
+import DatePicker from 'react-datepicker'
+import { format } from 'date-fns'
+import enGB from 'date-fns/locale/en-GB'
+import 'react-datepicker/dist/react-datepicker.css'
+
+// Inline SVG calendar icon component
+const CalendarIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5 text-gray-500"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+    />
+  </svg>
+)
+
+// Custom input to include calendar icon
+const CustomInput = forwardRef(({ value, onClick }, ref) => (
+  <button
+    type="button"
+    className="relative w-full text-left border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    onClick={onClick}
+    ref={ref}
+  >
+    <span className="block">{value}</span>
+    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+      <CalendarIcon />
+    </div>
+  </button>
+))
+CustomInput.displayName = 'CustomInput'
 
 export default function BrentPage() {
-  const [date, setDate] = useState('2025-05-12')
+  // Restrict selectable range: May 8–19, 2025
+  const minDate = new Date('2025-05-08')
+  const maxDate = new Date('2025-05-19')
+
+  const [selectedDate, setSelectedDate] = useState(new Date('2025-05-12'))
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
     setError(null)
     setResult(null)
 
+    const dateStr = format(selectedDate, 'yyyy-MM-dd')
+
+    setLoading(true)
     try {
       const res = await fetch('/api/brent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ date }),
+        body: JSON.stringify({ date: dateStr }),
       })
-
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       setResult(data)
@@ -40,13 +83,18 @@ export default function BrentPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex flex-col">
             <label htmlFor="date" className="text-sm font-medium text-gray-700 mb-2">Select Date</label>
-            <input
+            <DatePicker
               id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              filterDate={(date) => date.getDay() !== 0 && date.getDay() !== 6}
+              minDate={minDate}
+              maxDate={maxDate}
+              locale={enGB}
+              dateFormat="dd-MM-yyyy"
+              customInput={<CustomInput />}
             />
+            <small className="text-xs text-gray-500 mt-1">Only weekdays from 08-05-2025 to 19-05-2025 are selectable</small>
           </div>
 
           <button
