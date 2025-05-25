@@ -1,4 +1,4 @@
-// app/natural-gas/page.js
+// app/page.js
 'use client'
 
 import { useState, forwardRef } from 'react'
@@ -7,14 +7,12 @@ import { format, getYear, getMonth } from 'date-fns'
 import enGB from 'date-fns/locale/en-GB'
 import 'react-datepicker/dist/react-datepicker.css'
 
-// Inline SVG calendar icon component
 const CalendarIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
   </svg>
 )
 
-// Custom input to include calendar icon
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
   <button
     type="button"
@@ -31,7 +29,6 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 CustomInput.displayName = 'CustomInput'
 
 export default function NaturalGasPage() {
-  // Restrict selectable range: Jan 1, 2020 – May 19, 2025
   const minDate = new Date('2020-01-01')
   const maxDate = new Date('2025-05-19')
 
@@ -158,7 +155,6 @@ export default function NaturalGasPage() {
             </div>
           ) : (
             <div className="mt-6 bg-red-100 p-8 rounded-lg flex flex-col items-center">
-              {/* Split message to have date on new line */}
               {(() => {
                 const [prefix, datePart] = result.price.split(/(?='\d{4}-\d{2}-\d{2}')/)
                 return (
