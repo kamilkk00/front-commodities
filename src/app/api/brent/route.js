@@ -5,7 +5,7 @@ const UPSTREAM_URL = process.env.COMMODITIES_BRENT
 
 if (!UPSTREAM_URL) {
   throw new Error(
-    'Missing environment variable COMMODITIES_BRENT – please define it in .env.local'
+    'Missing environment variable COMMODITIES_BRENT – please define it in .env'
   )
 }
 
