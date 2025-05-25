@@ -31,8 +31,8 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 CustomInput.displayName = 'CustomInput'
 
 export default function BrentPage() {
-  // Restrict selectable range: May 8–19, 2025
-  const minDate = new Date('2025-05-08')
+  // Restrict selectable range: Jan 1, 2020 – May 19, 2025
+  const minDate = new Date('2020-01-01')
   const maxDate = new Date('2025-05-19')
 
   const [selectedDate, setSelectedDate] = useState(new Date('2025-05-12'))
@@ -83,7 +83,9 @@ export default function BrentPage() {
               dateFormat="dd-MM-yyyy"
               customInput={<CustomInput />}
             />
-            <small className="text-xs text-gray-500 mt-1">Only weekdays from 08-05-2025 to 19-05-2025 are selectable</small>
+            <small className="text-xs text-gray-500 mt-1">
+              Only weekdays from 01-01-2020 to 19-05-2025 are selectable
+            </small>
           </div>
 
           <button

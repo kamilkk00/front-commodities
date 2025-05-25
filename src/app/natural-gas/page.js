@@ -31,8 +31,8 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 CustomInput.displayName = 'CustomInput'
 
 export default function NaturalGasPage() {
-  // Restrict selectable range: May 8–19, 2025
-  const minDate = new Date('2025-05-08')
+  // Restrict selectable range: Jan 1, 2020 – May 19, 2025
+  const minDate = new Date('2020-01-01')
   const maxDate = new Date('2025-05-19')
 
   const [selectedDate, setSelectedDate] = useState(new Date('2025-05-12'))
@@ -83,7 +83,9 @@ export default function NaturalGasPage() {
               dateFormat="dd-MM-yyyy"
               customInput={<CustomInput />}
             />
-            <small className="text-xs text-gray-500 mt-1">Only weekdays from 08-05-2025 to 19-05-2025 are selectable</small>
+            <small className="text-xs text-gray-500 mt-1">
+              Only weekdays from 01-01-2020 to 19-05-2025 are selectable
+            </small>
           </div>
 
           <button
@@ -102,7 +104,7 @@ export default function NaturalGasPage() {
             <div className="mt-6 bg-green-50 p-6 rounded-lg flex flex-col items-center">
               <span className="text-gray-600 text-sm">Price on {format(selectedDate, 'dd-MM-yyyy')}</span>
               <span className="text-4xl font-semibold mt-2">${result.price.toFixed(2)}</span>
-              <span className="text-gray-600 text-sm mt-1">USD per barrel</span>
+              <span className="text-gray-600 text-sm mt-1">USD per MMBtu</span>
             </div>
           ) : (
             <div className="mt-6 bg-red-100 p-8 rounded-lg flex flex-col items-center">
