@@ -3,7 +3,7 @@
 
 import { useState, forwardRef } from 'react'
 import DatePicker from 'react-datepicker'
-import { format } from 'date-fns'
+import { format, getYear, getMonth } from 'date-fns'
 import enGB from 'date-fns/locale/en-GB'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -18,11 +18,11 @@ const CalendarIcon = () => (
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
   <button
     type="button"
-    className="relative w-full text-left border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    className="relative w-full text-left border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-blue-500 transition"
     onClick={onClick}
     ref={ref}
   >
-    <span className="block">{value}</span>
+    <span className="block text-gray-700 font-medium">{value}</span>
     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
       <CalendarIcon />
     </div>
@@ -39,6 +39,9 @@ export default function BrentPage() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  const months = Array.from({ length: 12 }, (_, i) => format(new Date(2020, i, 1), 'MMMM', { locale: enGB }))
+  const years = Array.from({ length: getYear(maxDate) - getYear(minDate) + 1 }, (_, i) => getYear(minDate) + i)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -65,13 +68,13 @@ export default function BrentPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-start justify-center pt-16 px-6">
-      <div className="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold text-center mb-6">OIL Brent Spot Price</h1>
+    <main className="min-h-screen bg-gray-50 flex items-start justify-center pt-16 px-6">
+      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full">
+        <h1 className="text-3xl font-extrabold text-center mb-6 text-blue-600">Brent Crude Oil Spot Price</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex flex-col">
-            <label htmlFor="date" className="text-sm font-medium text-gray-700 mb-2">Select Date</label>
+            <label htmlFor="date" className="text-sm font-semibold text-gray-800 mb-2">Select Date</label>
             <DatePicker
               id="date"
               selected={selectedDate}
@@ -81,6 +84,53 @@ export default function BrentPage() {
               maxDate={maxDate}
               locale={enGB}
               dateFormat="dd-MM-yyyy"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              renderCustomHeader={({
+                date,
+                changeYear,
+                changeMonth,
+                decreaseMonth,
+                increaseMonth,
+                prevMonthButtonDisabled,
+                nextMonthButtonDisabled,
+              }) => (
+                <div className="flex items-center justify-between px-3 py-2 bg-blue-50">
+                  <button
+                    onClick={decreaseMonth}
+                    disabled={prevMonthButtonDisabled}
+                    className="p-1 rounded hover:bg-blue-100 disabled:opacity-50"
+                  >
+                    ‹
+                  </button>
+                  <select
+                    value={getMonth(date)}
+                    onChange={(e) => changeMonth(Number(e.target.value))}
+                    className="border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                  >
+                    {months.map((month, idx) => (
+                      <option key={month} value={idx}>{month}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={getYear(date)}
+                    onChange={(e) => changeYear(Number(e.target.value))}
+                    className="border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                  >
+                    {years.map((year) => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={increaseMonth}
+                    disabled={nextMonthButtonDisabled}
+                    className="p-1 rounded hover:bg-blue-100 disabled:opacity-50"
+                  >
+                    ›
+                  </button>
+                </div>
+              )}
               customInput={<CustomInput />}
             />
             <small className="text-xs text-gray-500 mt-1">

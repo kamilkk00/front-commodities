@@ -15,9 +15,9 @@ export default function RootLayout({ children }) {
       <body>
         <header className="site-header">
           <div className="container">
+            <Link href="/" className="nav-link">Natural Gas</Link>
             <Link href="/wti" className="nav-link">WTI</Link>
             <Link href="/brent" className="nav-link">Brent</Link>
-            <Link href="/" className="nav-link">Natural Gas</Link>
           </div>
         </header>
         <main>
