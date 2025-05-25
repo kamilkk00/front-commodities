@@ -1,11 +1,11 @@
-// app/api/wti/route.js
+// app/api/natural-gas/route.js
 import { NextResponse } from 'next/server'
 
-const UPSTREAM_URL = process.env.COMMODITIES_WTI
+const UPSTREAM_URL = process.env.COMMODITIES_NATURAL_GAS
 
 if (!UPSTREAM_URL) {
   throw new Error(
-    'Missing environment variable COMMODITIES_WTI - please define it in .env'
+    'Missing environment variable COMMODITIES_NATURAL_GAS - please define it in .env'
   )
 }
 

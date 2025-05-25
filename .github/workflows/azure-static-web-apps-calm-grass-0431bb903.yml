@@ -36,6 +36,8 @@ jobs:
         run: echo 'COMMODITIES_BRENT=${{secrets.COMMODITIES_BRENT}}' >> .env
       - name: Generate Env File
         run: echo 'COMMODITIES_WTI=${{secrets.COMMODITIES_WTI}}' >> .env
+      - name: Generate Env File
+        run: echo 'COMMODITIES_NATURAL_GAS=${{secrets.COMMODITIES_NATURAL_GAS}}' >> .env
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
