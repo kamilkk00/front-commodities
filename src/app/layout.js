@@ -1,7 +1,7 @@
 // src/app/layout.js
 
-import "./globals.css";   // reset & variables
-import "./layout.css";    // layout-specific styles
+import "./globals.css";   
+import "./layout.css";    
 import Link from "next/link";
 
 export const metadata = {
