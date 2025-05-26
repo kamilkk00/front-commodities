@@ -1,30 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Commodity Price Checker
 
-## Getting Started
+A Next.js app for checking historical commodity prices (Natural Gas, WTI, Brent) by date.
 
-First, run the development server:
+## Features
+
+- Check Natural Gas, WTI, and Brent crude oil spot prices
+- Interactive date picker (weekdays only, 2020-2025)
+- Responsive design with Tailwind CSS
+- Navigation between commodity types
+
+## Tech Stack
+
+- Next.js 14+ (App Router)
+- React with custom components
+- Tailwind CSS
+- react-datepicker + date-fns
+
+## Installation
 
 ```bash
+npm install
+npm install react-datepicker date-fns
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Select a commodity from the header navigation
+2. Pick a date (weekdays only)
+3. Click "Get Price" to fetch spot price
+4. View price in USD per MMBtu (Natural Gas) or per barrel (Oil)
 
-## Learn More
+## API Integration
 
-To learn more about Next.js, take a look at the following resources:
+Expects POST endpoints:
+- `/api/natural-gas`
+- `/api/wti` 
+- `/api/brent`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Request format:
+```json
+{ "date": "2025-05-12" }
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Response format:
+```json
+{ "price": 2.45 }
+```
